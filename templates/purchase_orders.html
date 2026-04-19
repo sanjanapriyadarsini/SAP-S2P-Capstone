@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="page-header">
+    <div>
+        <h1>Purchase Orders</h1>
+        <p class="subtitle">Official orders sent to vendors</p>
+    </div>
+    <a href="/purchase-orders/add" class="btn btn-primary">+ Create PO</a>
+</div>
+
+<div class="section-card">
+    {% if purchase_orders %}
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>PO #</th><th>Item</th><th>Vendor</th><th>Qty</th>
+                <th>Unit Price</th><th>Total</th><th>Delivery Date</th><th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for po in purchase_orders %}
+            <tr>
+                <td>PO-{{ po.id }}</td>
+                <td><strong>{{ po.item_name }}</strong></td>
+                <td>{{ po.vendor_name }}</td>
+                <td>{{ po.quantity }}</td>
+                <td>₹{{ "%.2f"|format(po.unit_price) }}</td>
+                <td><strong>₹{{ "%.2f"|format(po.total_amount) }}</strong></td>
+                <td>{{ po.delivery_date or '—' }}</td>
+                <td><span class="badge badge-{{ po.status|lower }}">{{ po.status }}</span></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="empty-msg">No purchase orders yet. <a href="/purchase-orders/add">Create one →</a></p>
+    {% endif %}
+</div>
+
+{% endblock %}

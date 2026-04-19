@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="page-header">
+    <div>
+        <h1>New Purchase Requisition</h1>
+        <p class="subtitle">Submit an internal request to purchase items</p>
+    </div>
+    <a href="/requisitions" class="btn btn-secondary">← Back</a>
+</div>
+
+<div class="form-card">
+    <form method="POST">
+        <div class="form-grid">
+            <div class="form-group">
+                <label>Item Name *</label>
+                <input type="text" name="item_name" required placeholder="e.g. Dell Laptops">
+            </div>
+            <div class="form-group">
+                <label>Quantity *</label>
+                <input type="number" name="quantity" min="1" required placeholder="10">
+            </div>
+            <div class="form-group">
+                <label>Estimated Cost (₹) *</label>
+                <input type="number" step="0.01" name="estimated_cost" required placeholder="50000">
+            </div>
+            <div class="form-group">
+                <label>Department *</label>
+                <input type="text" name="department" required placeholder="IT / HR / Finance">
+            </div>
+            <div class="form-group form-full">
+                <label>Requested By *</label>
+                <input type="text" name="requested_by" required placeholder="Your name">
+            </div>
+            <div class="form-group form-full">
+                <label>Reason / Justification</label>
+                <textarea name="reason" rows="2" placeholder="Why is this purchase needed?"></textarea>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Requisition</button>
+    </form>
+</div>
+
+{% endblock %}

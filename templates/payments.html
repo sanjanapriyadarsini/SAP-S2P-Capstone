@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-header">
+    <div><h1>Payment Tracker</h1><p class="subtitle">Payments released to vendors</p></div>
+</div>
+<div class="section-card">
+    {% if payments %}
+    <table class="data-table">
+        <thead>
+            <tr><th>PAY #</th><th>Invoice #</th><th>Vendor</th><th>Amount Paid</th><th>Mode</th><th>Reference</th><th>Date</th></tr>
+        </thead>
+        <tbody>
+            {% for p in payments %}
+            <tr>
+                <td>PAY-{{ p.id }}</td>
+                <td>{{ p.invoice_number }}</td>
+                <td>{{ p.vendor_name }}</td>
+                <td><strong>₹{{ "%.2f"|format(p.amount_paid) }}</strong></td>
+                <td>{{ p.payment_mode }}</td>
+                <td>{{ p.reference_no or '—' }}</td>
+                <td>{{ p.payment_date[:10] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="empty-msg">No payments yet. Run 3-Way Match on an invoice first.</p>
+    {% endif %}
+</div>
+{% endblock %}

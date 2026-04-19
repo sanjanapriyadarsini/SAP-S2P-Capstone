@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="page-header">
+    <h1>S2P Dashboard</h1>
+    <p class="subtitle">Real-time overview of your Source-to-Pay pipeline</p>
+</div>
+
+<div class="kpi-grid">
+    <div class="kpi-card kpi-blue">
+        <div class="kpi-label">Active Vendors</div>
+        <div class="kpi-value">{{ stats.vendors }}</div>
+        <div class="kpi-sub">Registered suppliers</div>
+    </div>
+    <div class="kpi-card kpi-amber">
+        <div class="kpi-label">Pending Requisitions</div>
+        <div class="kpi-value">{{ stats.requisitions }}</div>
+        <div class="kpi-sub">Awaiting approval</div>
+    </div>
+    <div class="kpi-card kpi-purple">
+        <div class="kpi-label">Open Purchase Orders</div>
+        <div class="kpi-value">{{ stats.open_pos }}</div>
+        <div class="kpi-sub">Sent to vendors</div>
+    </div>
+    <div class="kpi-card kpi-red">
+        <div class="kpi-label">Pending Invoices</div>
+        <div class="kpi-value">{{ stats.pending_inv }}</div>
+        <div class="kpi-sub">Awaiting 3-way match</div>
+    </div>
+    <div class="kpi-card kpi-green">
+        <div class="kpi-label">Total Spend</div>
+        <div class="kpi-value">₹{{ "%.0f"|format(stats.total_spend) }}</div>
+        <div class="kpi-sub">Payments released</div>
+    </div>
+    <div class="kpi-card kpi-teal">
+        <div class="kpi-label">Matched Invoices</div>
+        <div class="kpi-value">{{ stats.matched }}</div>
+        <div class="kpi-sub">3-way match passed</div>
+    </div>
+</div>
+
+<div class="section-card">
+    <h2 class="section-title">S2P Process Flow</h2>
+    <div class="process-flow">
+        <div class="pf-step"><div class="pf-circle">1</div><div class="pf-label">Vendor<br>Registration</div></div>
+        <div class="pf-arrow">→</div>
+        <div class="pf-step"><div class="pf-circle">2</div><div class="pf-label">Purchase<br>Requisition</div></div>
+        <div class="pf-arrow">→</div>
+        <div class="pf-step"><div class="pf-circle">3</div><div class="pf-label">Purchase<br>Order</div></div>
+        <div class="pf-arrow">→</div>
+        <div class="pf-step"><div class="pf-circle">4</div><div class="pf-label">Goods<br>Receipt</div></div>
+        <div class="pf-arrow">→</div>
+        <div class="pf-step"><div class="pf-circle">5</div><div class="pf-label">Invoice<br>Processing</div></div>
+        <div class="pf-arrow">→</div>
+        <div class="pf-step"><div class="pf-circle">6</div><div class="pf-label">3-Way<br>Matching</div></div>
+        <div class="pf-arrow">→</div>
+        <div class="pf-step"><div class="pf-circle">7</div><div class="pf-label">Payment<br>Release</div></div>
+    </div>
+</div>
+
+{% endblock %}

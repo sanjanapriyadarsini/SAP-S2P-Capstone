@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="page-header">
+    <div>
+        <h1>Purchase Requisitions</h1>
+        <p class="subtitle">Internal purchase requests awaiting approval</p>
+    </div>
+    <a href="/requisitions/add" class="btn btn-primary">+ New Requisition</a>
+</div>
+
+<div class="section-card">
+    {% if requisitions %}
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>PR #</th><th>Item</th><th>Qty</th><th>Est. Cost</th>
+                <th>Department</th><th>Requested By</th><th>Status</th><th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in requisitions %}
+            <tr>
+                <td>PR-{{ r.id }}</td>
+                <td>
+                    <strong>{{ r.item_name }}</strong><br>
+                    <small>{{ r.reason }}</small>
+                </td>
+                <td>{{ r.quantity }}</td>
+                <td>₹{{ "%.2f"|format(r.estimated_cost) }}</td>
+                <td>{{ r.department }}</td>
+                <td>{{ r.requested_by }}</td>
+                <td><span class="badge badge-{{ r.status|lower }}">{{ r.status }}</span></td>
+                <td>
+                    {% if r.status == 'Pending' %}
+                    <a href="/requisitions/approve/{{ r.id }}" class="btn btn-sm btn-success">✓ Approve</a>
+                    <a href="/requisitions/reject/{{ r.id }}"  class="btn btn-sm btn-danger">✗ Reject</a>
+                    {% elif r.status == 'Approved' %}
+                    <a href="/purchase-orders/add" class="btn btn-sm btn-primary">Create PO →</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="empty-msg">No requisitions yet. <a href="/requisitions/add">Create one →</a></p>
+    {% endif %}
+</div>
+
+{% endblock %}

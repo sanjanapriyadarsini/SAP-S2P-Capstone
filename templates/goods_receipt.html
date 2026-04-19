@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1>Goods Receipt</h1>
+        <p class="subtitle">Record delivery of ordered goods</p>
+    </div>
+    <a href="/goods-receipt/add" class="btn btn-primary">+ Record Receipt</a>
+</div>
+<div class="section-card">
+    {% if receipts %}
+    <table class="data-table">
+        <thead>
+            <tr><th>GR #</th><th>Item</th><th>Vendor</th><th>Ordered</th><th>Received</th><th>Condition</th><th>Received By</th><th>Date</th></tr>
+        </thead>
+        <tbody>
+            {% for gr in receipts %}
+            <tr>
+                <td>GR-{{ gr.id }}</td>
+                <td>{{ gr.item_name }}</td>
+                <td>{{ gr.vendor_name }}</td>
+                <td>{{ gr.ordered_qty }}</td>
+                <td>{{ gr.received_qty }}</td>
+                <td>{% if gr.condition_ok %}<span class="badge badge-active">Good ✓</span>{% else %}<span class="badge badge-rejected">Damaged ✗</span>{% endif %}</td>
+                <td>{{ gr.received_by }}</td>
+                <td>{{ gr.received_at[:10] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="empty-msg">No goods receipts yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-header">
+    <div><h1>Record Goods Receipt</h1><p class="subtitle">Confirm delivery of a Purchase Order</p></div>
+    <a href="/goods-receipt" class="btn btn-secondary">← Back</a>
+</div>
+<div class="form-card">
+    <form method="POST">
+        <div class="form-grid">
+            <div class="form-group form-full">
+                <label>Select Purchase Order *</label>
+                <select name="po_id" required>
+                    <option value="">— Choose PO —</option>
+                    {% for po in purchase_orders %}
+                    <option value="{{ po.id }}">PO-{{ po.id }}: {{ po.item_name }} | {{ po.vendor_name }} (Qty: {{ po.quantity }})</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Quantity Received *</label>
+                <input type="number" name="received_qty" min="1" required placeholder="Units received">
+            </div>
+            <div class="form-group">
+                <label>Received By *</label>
+                <input type="text" name="received_by" required placeholder="Staff name">
+            </div>
+            <div class="form-group form-full">
+                <label class="checkbox-label">
+                    <input type="checkbox" name="condition_ok" checked>
+                    &nbsp; Goods received in good condition
+                </label>
+            </div>
+            <div class="form-group form-full">
+                <label>Remarks</label>
+                <textarea name="remarks" rows="2" placeholder="Any notes about delivery..."></textarea>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Save Goods Receipt</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-header">
+    <div><h1>Record Vendor Invoice</h1><p class="subtitle">Log a bill received from a vendor</p></div>
+    <a href="/invoices" class="btn btn-secondary">← Back</a>
+</div>
+<div class="form-card">
+    <div class="info-box">ℹ️ Invoices can only be recorded for <strong>Delivered</strong> Purchase Orders.</div>
+    <form method="POST">
+        <div class="form-grid">
+            <div class="form-group form-full">
+                <label>Select Delivered PO *</label>
+                <select name="po_id" required>
+                    <option value="">— Choose PO —</option>
+                    {% for po in purchase_orders %}
+                    <option value="{{ po.id }}">PO-{{ po.id }}: {{ po.item_name }} | {{ po.vendor_name }} | ₹{{ "%.2f"|format(po.total_amount) }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Vendor *</label>
+                <select name="vendor_id" required>
+                    <option value="">— Choose Vendor —</option>
+                    {% for v in vendors %}
+                    <option value="{{ v.id }}">{{ v.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Invoice Number *</label>
+                <input type="text" name="invoice_number" required placeholder="INV-2026-001">
+            </div>
+            <div class="form-group">
+                <label>Invoice Amount (₹) *</label>
+                <input type="number" step="0.01" name="invoice_amount" required>
+            </div>
+            <div class="form-group">
+                <label>Invoice Date *</label>
+                <input type="date" name="invoice_date" required>
+            </div>
+            <div class="form-group">
+                <label>Due Date</label>
+                <input type="date" name="due_date">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Save Invoice</button>
+    </form>
+</div>
+{% endblock %}

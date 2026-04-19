@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="page-header">
+    <div>
+        <h1>Vendor Management</h1>
+        <p class="subtitle">Manage your registered suppliers</p>
+    </div>
+    <a href="/vendors/add" class="btn btn-primary">+ Add Vendor</a>
+</div>
+
+<div class="section-card">
+    {% if vendors %}
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Email</th>
+                <th>GST No.</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for v in vendors %}
+            <tr>
+                <td>{{ v.id }}</td>
+                <td><strong>{{ v.name }}</strong></td>
+                <td>{{ v.category }}</td>
+                <td>{{ v.email }}</td>
+                <td>{{ v.gst_number or '—' }}</td>
+                <td><span class="badge badge-{{ v.status|lower }}">{{ v.status }}</span></td>
+                <td>
+                    {% if v.status == 'Active' %}
+                    <a href="/vendors/delete/{{ v.id }}"
+                       onclick="return confirm('Deactivate this vendor?')"
+                       class="btn btn-sm btn-danger">Deactivate</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="empty-msg">No vendors yet. <a href="/vendors/add">Register one →</a></p>
+    {% endif %}
+</div>
+
+{% endblock %}

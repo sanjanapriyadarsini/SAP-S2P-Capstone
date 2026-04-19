@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="page-header">
+    <div>
+        <h1>Register New Vendor</h1>
+        <p class="subtitle">Add a new supplier to the system</p>
+    </div>
+    <a href="/vendors" class="btn btn-secondary">← Back</a>
+</div>
+
+<div class="form-card">
+    <form method="POST">
+        <div class="form-grid">
+            <div class="form-group">
+                <label>Vendor Name *</label>
+                <input type="text" name="name" required placeholder="e.g. Tata Consultancy">
+            </div>
+            <div class="form-group">
+                <label>Email *</label>
+                <input type="email" name="email" required placeholder="vendor@company.com">
+            </div>
+            <div class="form-group">
+                <label>Phone</label>
+                <input type="text" name="phone" placeholder="+91 98765 43210">
+            </div>
+            <div class="form-group">
+                <label>Category</label>
+                <select name="category">
+                    <option>IT</option>
+                    <option>Logistics</option>
+                    <option>Raw Materials</option>
+                    <option>Office Supplies</option>
+                    <option>Consulting</option>
+                    <option>General</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>GST Number</label>
+                <input type="text" name="gst_number" placeholder="22AAAAA0000A1Z5">
+            </div>
+            <div class="form-group form-full">
+                <label>Address</label>
+                <textarea name="address" rows="2" placeholder="Full address..."></textarea>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Register Vendor</button>
+    </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-header">
+    <div><h1>Invoice Processing</h1><p class="subtitle">Vendor invoices and 3-way matching</p></div>
+    <a href="/invoices/add" class="btn btn-primary">+ Add Invoice</a>
+</div>
+<div class="section-card">
+    {% if invoices %}
+    <table class="data-table">
+        <thead>
+            <tr><th>Invoice #</th><th>Vendor</th><th>Item</th><th>PO Amount</th><th>Invoice Amt</th><th>Date</th><th>3-Way Match</th><th>Status</th><th>Actions</th></tr>
+        </thead>
+        <tbody>
+            {% for inv in invoices %}
+            <tr>
+                <td><strong>{{ inv.invoice_number }}</strong></td>
+                <td>{{ inv.vendor_name }}</td>
+                <td>{{ inv.item_name }}</td>
+                <td>₹{{ "%.2f"|format(inv.po_amount) }}</td>
+                <td>₹{{ "%.2f"|format(inv.invoice_amount) }}</td>
+                <td>{{ inv.invoice_date }}</td>
+                <td><span class="badge badge-{{ 'matched' if inv.match_status=='3-Way Matched' else ('rejected' if inv.match_status=='Mismatch' else 'pending') }}">{{ inv.match_status }}</span></td>
+                <td><span class="badge badge-{{ inv.status|lower }}">{{ inv.status }}</span></td>
+                <td>
+                    {% if inv.match_status == 'Unverified' %}
+                    <a href="/invoices/match/{{ inv.id }}" class="btn btn-sm btn-primary">Run 3-Way Match</a>
+                    {% elif inv.match_status == '3-Way Matched' and inv.status != 'Paid' %}
+                    <a href="/payments/add/{{ inv.id }}" class="btn btn-sm btn-success">Pay →</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="empty-msg">No invoices yet. <a href="/invoices/add">Add one →</a></p>
+    {% endif %}
+</div>
+{% endblock %}
